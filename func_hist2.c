@@ -5,7 +5,7 @@
  * @cmd: input command
  *
  */
-void cmhst(hist *history, char *cmd)
+void cmhst(hist *histr, char *cmd)
 {
 	static int index = 1;
 	hist *tmp;
@@ -13,16 +13,16 @@ void cmhst(hist *history, char *cmd)
 	int a, length;
 
 	newcmd = maloc(sizeof(char) * slen(cmd) + 1);
-	tmp = history
+	tmp = histr
 	if (index == 1)
-		for (tmp = history; tmp != NULL; tmp = tmp->nxt)
+		for (tmp = histr; tmp != NULL; tmp = tmp->nxt)
 			index++;
 	length = slen(cmd);
 	for (a = 0; a < length - 1; a++)
 		newcmd[a] = cmd[a];
 	newcmd[a] = '\0';
 	if (len > 1)
-		addh(history, newcmd);
+		addh(histr, newcmd);
 	index++;
 	fr(newcmd);
 }
