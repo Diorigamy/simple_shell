@@ -23,14 +23,13 @@ int hexit(char **list, env *env_n, int length)
 	return (0);
 }
 /**
- * sh_exit_help - help print out 
+ * hexit_help - help print out 
  * Return: 0
  */
-int h_exit_help(void)
+int hexit_help(void)
 {
 	wr("exit usage: exit N\n    Exit the shell.\n\n    ");
 	wr("Exits the shell with a status of N.  If N is omitted, ");
 	wr("the exit status\n    is that of the last command executed.\n");
 	return (0);
 }
-

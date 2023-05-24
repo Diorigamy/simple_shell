@@ -152,7 +152,7 @@ char *schr(char *s, char c);
 int slen(char *s);
 int smach(char *s1, char *s2);
 int smanch(char *s1, char *s2);
-int s2i(char *s);
+int _s2i(char *s);
 
 /* checks.c */
 int sewint(char *shtack, char *nd);
@@ -216,11 +216,11 @@ int _setenv(char **arg, env *env_b, int lenp);
 int _unsetenv(char **arg, env *env_b);
 int ccd(char **list, env *env_n, int length);
 int _help(char **list);
-int _exit(char **list, env *env_n, int length);
+int _hexit(char **list, env *env_n, int length);
 int _hist(char **arg, env *env_b, int lenp);
 
 /* list of builtin help printouts */
-int h_exit_help(void);
+int hexit_help(void);
 int h_env_help(void);
 int shetenv(void);
 int hunsetenv(void);
