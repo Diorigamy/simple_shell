@@ -10,12 +10,12 @@ void mk_hist(hist *mkht, env *env_n)
 	int a, b, c;
 	char *string, *buff;
 
-	buff = _malloc(sizeof(char) * BUFSIZE);
-	_memset(buff, '\0', BUFSIZE);
+	buff = maloc(sizeof(char) * BUFSIZE);
+	mset(buff, '\0', BUFSIZE);
 	c = rd_input(env_n, &buff);
 	if (c > 0)
 	{
-		string = _malloc(sizeof(char) * _strlen(buff));
+		string = maloc(sizeof(char) * _strlen(buff));
 		if (*buff == '\0')
 		{
 			addh(mkht, "");
@@ -44,9 +44,9 @@ void pt_hist(hist *new)
 
 	while (new != NULL)
 	{
-		string = _strdup(new->t_cmd);
-		_write(string);
-		_write("\n");
+		string = sdup(new->t_cmd);
+		wr(string);
+		wr("\n");
 		new = new->nxt;
 	}
 }
@@ -61,9 +61,9 @@ hist *addh(hist *new, char *t_cmd)
 	hist *n_node;
 	hist *tmp;
 
-	n_node = _malloc(sizeof(hist));
+	n_node = maloc(sizeof(hist));
 	n_node->nxt = NULL;
-	n_node->t_cmd = _strdup(t_cmd);
+	n_node->t_cmd = sdup(t_cmd);
 	if (new == NULL)
 		new = n_node;
 	else
@@ -87,17 +87,16 @@ char *my_path(char **path, char *fnm, char *key, env *env_n)
 {
 	char *amount;
 
-	if (_strstr(key, "/"))
+	if (ssew(key, "/"))
 	{
 		path = fnm;
 		return (fnm);
 	}
 	amount = env_value(env_n, key);
-	*path = _malloc(sizeof(char) * (_strlen(amount) + _strlen(fnm) + 2));
-	_memcpy(*path, amount, _strlen(amount) + 1);
-	_strcat(*path, "/");
-	_strcat(*path, fnm);
-	/* I have altered the strcat function, to check if it works */
+	*path = maloc(sizeof(char) * (_strlen(amount) + _strlen(fnm) + 2));
+	mcpy(*path, amount, _strlen(amount) + 1);
+	scat(*path, "/");
+	scat(*path, fnm);
 	return (*path);
 }
 /**
@@ -112,14 +111,14 @@ int rd_input(env *env_n, char **ptr)
 	static int text = BUFSIZE;
 	char *filepath, new_buff;
 
-	filepath = rm_name(env_n, "HOME", BUFSIZE);
+	filepath = delv(env_n, "HOME", BUFSIZE);
 	if (filepath == NULL)
 	{
-		_write("Error: Home not found\n");
-		_write("History file not found\n");
+		wr("Error: Home not found\n");
+		wr("History file not found\n");
 		return (1);
 	}
-	_strcat(filepath, "/.simple_shell_history");
+	scat(filepath, "/.simple_shell_history");
 	file = open(filepath, O_RDWR | 0600);
 	if (fie > 0)
 	{
@@ -131,9 +130,9 @@ int rd_input(env *env_n, char **ptr)
 				(*ptr)[byte_read + index] = '\0';
 			}
 			text *= 2;
-			new_buff = _malloc((text) * sizeof(char));
+			new_buff = maloc((text) * sizeof(char));
 			index += byte_read;
-			_memcpy(new_buff, *ptr, text / 2);
+			mcpy(new_buff, *ptr, text / 2);
 			*ptr = new_buff;
 		}
 		close(file);
