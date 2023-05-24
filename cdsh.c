@@ -17,7 +17,7 @@ int ccd(char **list, env *env_n, int length)
 	filepath = pach(list, env_n, buf_size);
 	if (filepath == NULL)
 	       return (2);
-	i = chdri(filepath);
+	i = chdir(filepath);
 	if (i < 0)
 		return (2);
 	else

@@ -33,8 +33,8 @@ typedef struct ctrl_buf
  */
 typedef struct blt_in
 {
-	char *fncl;
-	int (*pfn)();
+	char *name;
+	int (*func)();
 } blt_in;
 /**
  * sv_add - List for saving addresses for freeing on exit
@@ -87,37 +87,37 @@ typedef struct c_alias
 typedef void (*c_signh)(int);
 void signh (int sig);
 
-/* history.c */            
+/* hist.c */            
 void svd_hist(char *t_cmd, env *env_n, char typ);
 void pt_hist1(hist *hpt);
 
-/* history_func.c*/
+/* func_hist.c*/
 void mk_hist(hist *mkht, env *env_n);
 int rd_input(env *env_n, char **ptr);
 hist *addh(hist *new, char *t_cmd);
 void pt_hist(hist *new);
 char *my_path(char **path, char *fnm, char *key, env *env_n);
 
-/* history_func2.c*/
+/* func_hist2.c*/
 void cmhst(hist *histr, char *cmd);
 void rem_top(hist *new);
 int wrhst(env *env_n, hist *history);
 char *s2i(int dig, int modetyp);
 
-/* shell.c */
+/* main.c */
 int t_cmds(ctrl_buf *b, int val_return);
 void tok_cmd(ctrl_buf *b);
 
-/* variable_expansion.c */
+/* vexp.c */
 void vaxpan(ctrl_buf *b, env *env_n, int val_return);
 char *_getpid(void);
 char *_getTok(char *stat, int n);
 
-/* run_execute.c */
+/* execute.c */
 int _rexec(char **list, env *env_r, int length);
 int _fexec(char *command, char **list, env *env_n);
 
-/* linked_env.c*/
+/* linked.c*/
 env *mk_lenv();
 env *envadd(env **top, char *s);
 void remonv(env *top, int idx);
@@ -165,7 +165,7 @@ int digits(char c);
 int stach(char *s1, char *s2, char *delim);
 int chach(char c, char *nds);
 
-/* getline.c */
+/* rdline.c */
 int rd_cmd(ctrl_buf *b, int fd, env *env_r);
 int rd_end(char *s);
 int rd_file(ctrl_buf *b, env *env_r);
@@ -197,7 +197,7 @@ void nadd(char *ptr);
 int chesp(char c);
 int cmend(char c);
 
-/* run_builtin.c */
+/* blt_in.c */
 int blt_rin(char **largs, env *env_r, int lenp);
 
 /* alias.c */
@@ -210,22 +210,23 @@ int clead(sv_add *list, void *add);
 void addred(sv_add *list, void *add);
 void fread(sv_add *list);
 
-/* list of builtin functions */
-int my_env(char **arg, env *env_b);
+/* builtin functions */
+int int henv(char **list, env *env_n);
 int _setenv(char **arg, env *env_b, int lenp);
 int _unsetenv(char **arg, env *env_b);
-int _cd(char **arg, env *env_b, int lenp);
-int _help(char **arg);
-int sh_exit(char **arg_list, env *env_b, int lenp);
+int ccd(char **list, env *env_n, int length);
+int _help(char **list);
+int hexit(char **list, env *env_n, int length);
 int _hist(char **arg, env *env_b, int lenp);
 
 /* list of builtin help printouts */
-int sh_exit_help(void);
-int henv(void);
+int h_exit_help(void);
+int h_env_help(void);
 int shetenv(void);
 int hunsetenv(void);
-int chd(void);
+int ccd_help(void);
 int hisht(void);
 int heelp(void);
 int halias(void);
+int heelp_help(void);
 #endif
