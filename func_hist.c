@@ -15,7 +15,7 @@ void mk_hist(hist *mkht, env *env_n)
 	c = rd_input(env_n, &buff);
 	if (c > 0)
 	{
-		string = maloc(sizeof(char) * _strlen(buff));
+		string = maloc(sizeof(char) * slen(buff));
 		if (*buff == '\0')
 		{
 			addh(mkht, "");
@@ -45,8 +45,8 @@ void pt_hist(hist *new)
 	while (new != NULL)
 	{
 		string = sdup(new->t_cmd);
-		wr(string);
-		wr("\n");
+		rw(string);
+		rw("\n");
 		new = new->nxt;
 	}
 }
@@ -92,9 +92,9 @@ char *my_path(char **path, char *fnm, char *key, env *env_n)
 		path = fnm;
 		return (fnm);
 	}
-	amount = env_value(env_n, key);
-	*path = maloc(sizeof(char) * (_strlen(amount) + _strlen(fnm) + 2));
-	mcpy(*path, amount, _strlen(amount) + 1);
+	amount = retenv(env_n, key);
+	*path = maloc(sizeof(char) * (slen(amount) + slen(fnm) + 2));
+	mcpy(*path, amount, slen(amount) + 1);
 	scat(*path, "/");
 	scat(*path, fnm);
 	return (*path);
@@ -114,8 +114,8 @@ int rd_input(env *env_n, char **ptr)
 	filepath = delv(env_n, "HOME", BUFSIZE);
 	if (filepath == NULL)
 	{
-		wr("Error: Home not found\n");
-		wr("History file not found\n");
+		rw("Error: Home not found\n");
+		rw("History file not found\n");
 		return (1);
 	}
 	scat(filepath, "/.simple_shell_history");

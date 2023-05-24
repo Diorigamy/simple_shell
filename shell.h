@@ -11,7 +11,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#define BUFSIZE 512
+#define BUFSIZE 600
 #define FREE_ADDRESSES ((void *)3)
 #define ARRAY_SIZE(ARRAY) (sizeof(ARRAY) / sizeof((ARRAY)[0]))
 /**
@@ -82,7 +82,7 @@ typedef struct c_alias
 	char *key;
 	char *val;
 	struct c_alias *nxt;
-} C_alias;
+} c_alias;
 
 typedef void (*c_signh)(int);
 void signh (int sig);
@@ -102,11 +102,11 @@ char *my_path(char **path, char *fnm, char *key, env *env_n);
 void cmhst(hist *histr, char *cmd);
 void rem_top(hist *new);
 int wrhst(env *env_n, hist *history);
-char *s2i(int dig, int modetyp);
+char *i2s(int dig, int modetyp);
 
 /* main.c */
 int t_cmds(ctrl_buf *b, int val_return);
-void tok_cmd(ctrl_buf *b);
+void trim_cmd(ctrl_buf *b);
 
 /* vexp.c */
 void vaxpan(ctrl_buf *b, env *env_n, int val_return);
@@ -176,7 +176,7 @@ void berase(ctrl_buf *b, int n);
 void bins(ctrl_buf *b, char *s, int n);
 
 /* halias.c */
-alias(char *int*argv, env *env_a, int typ);
+int alias(char *int*argv, env *env_a, int typ);
 char *falias(c_alias *list, char *arg);
 int pallias(c_alias *list);
 int palias(c_alias *list, char **argv);
@@ -200,7 +200,7 @@ int cmend(char c);
 /* blt_in.c */
 int blt_rin(char **largs, env *env_r, int lenp);
 
-/* alias.c */
+/* xalias.c */
 int expalias(ctrl_buf *b, env *env_a);
 
 /* maloc.c */
@@ -216,7 +216,7 @@ int _setenv(char **arg, env *env_b, int lenp);
 int _unsetenv(char **arg, env *env_b);
 int ccd(char **list, env *env_n, int length);
 int _help(char **list);
-int hexit(char **list, env *env_n, int length);
+int _exit(char **list, env *env_n, int length);
 int _hist(char **arg, env *env_b, int lenp);
 
 /* list of builtin help printouts */
@@ -226,7 +226,6 @@ int shetenv(void);
 int hunsetenv(void);
 int ccd_help(void);
 int hisht(void);
-int heelp(void);
 int halias(void);
 int heelp_help(void);
 #endif

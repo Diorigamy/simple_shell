@@ -56,8 +56,8 @@ int wrhst(env *env_n, hist *history)
 	filepath = delv(env_n, "HOME=", BUFSIZE);
 	if (filepath == NULL)
 	{
-		wr("Error: history file not found\n");
-		wr("Cannot write history\n");
+		rw("Error: history file not found\n");
+		rw("Cannot write history\n");
 		return (1);
 	}
 	scat(path, "/.simple_shell_history");
