@@ -56,17 +56,17 @@ int t_cmds(ctrl_buf *b, int val_return)
 	{
 		if (b->ptr[b->curr] == ';')
 		{
-			tok_cmd(b);
+			trim_cmd(b);
 			return (1);
 		}
 		if (b->ptr[b->curr] == '&' && val_return == 0)
 		{
-			tok_cmd(b);
+			trim_cmd(b);
 			return (1);
 		}
 		if (b->ptr[b->curr] == '|' && val_return != 0)
 		{
-			tok_cmd(b);
+			trim_cmd(b);
 			return (1);
 		}
 		b->curr++;
@@ -75,11 +75,11 @@ int t_cmds(ctrl_buf *b, int val_return)
 	return (0);
 }
 /**
- * tok_cmd - move beyond flowcontrol of cmd
+ * trim_cmd - move beyond flowcontrol of cmd
  * @a: buffer structure
  *
  */
-void tok_cmd(ctrl_buf *b)
+void trim_cmd(ctrl_buf *b)
 {
 	int flag = 0;
 
