@@ -1,8 +1,9 @@
 #include "shell.h"
+
 /**
- * create_history - creates a linked list
- * @history: list to pass
- * @envp: variable linked list
+ * create_history - creates a linked list of history
+ * @history: linked list
+ * @envp: environmental variable linked list
  * Return: a pointer to the history linked list
  */
 
@@ -11,6 +12,7 @@ void create_history(hist_t *history, env_t *envp)
 	char *str, *buf;
 	int i, j, n;
 
+	/* create a buf of what is in the file */
 	buf = safe_malloc(sizeof(char) * BUFSIZE);
 	_memset(buf, '\0', BUFSIZE);
 	n = read_file(envp, &buf);
@@ -20,6 +22,8 @@ void create_history(hist_t *history, env_t *envp)
 		if (*buf == '\0')
 		{
 			add_history(history, "");
+		}
+		/* create linked list and fill in with what is in file*/
 		for (i = 0, j = 0; buf[i] != '\0'; i++)
 		{
 			if (buf[i] == '\n')
@@ -34,10 +38,27 @@ void create_history(hist_t *history, env_t *envp)
 	}
 }
 /**
- * add_history - creates history node to linked list
- * @head: head
- * @cmd: command to store
- * Return: pointer to new node
+ * print_history - prints the history
+ * @head: the head of the linked list
+ */
+
+void print_history(hist_t *head)
+{
+	char *str;
+
+	while (head != NULL)
+	{
+		str = _strdup(head->cmd);
+		_write(str);
+		_write("\n");
+		head = head->next;
+	}
+}
+/**
+ * add_history - creates consecutive history node
+ * @head: head of the history linked list
+ * @cmd: command to store in list
+ * Return: new node
  */
 
 hist_t *add_history(hist_t *head, char *cmd)
@@ -59,30 +80,13 @@ hist_t *add_history(hist_t *head, char *cmd)
 	}
 	return (new_node);
 }
-
 /**
- * print_history - prints the history
- * @head: the head of the linked list
+ * read_file - reads the simple_shell_history file
+ * @envp: environemental variable linked list
+ * @buf: buffer to store whats read
+ * Return: 0 or 1
  */
 
-void print_history(hist_t *head)
-{
-	char *str;
-
-	while (head != NULL)
-	{
-		str = _strdup(head->cmd);
-		_write(str);
-		_write("\n");
-		head = head->next;
-	}
-}
-/**
- * read_file - reads history for simple_shell file
- * @envp: linked list
- * @buf: buffer
- * Return: 1 or 0
- */
 int read_file(env_t *envp, char **buf)
 {
 	static int b_size = BUFSIZE;
